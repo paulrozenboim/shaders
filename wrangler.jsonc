@@ -1,0 +1,12 @@
+{
+  // Static files, nothing to build. The whole repository is the site: the
+  // sources in src/ and the harness in tools/ are meant to be readable, and
+  // build/ is what people actually download.
+  "name": "shaders",
+  "compatibility_date": "2026-09-20",
+  "assets": {
+    "directory": "./",
+    // Without this a wrong address returns an empty 404 rather than the page.
+    "not_found_handling": "404-page"
+  }
+}
