@@ -1,0 +1,69 @@
+/* Shaders — the unapaulogetic system, tokens from the main site's
+   brand-tokens.css. The shaders are black and white; the page stays out of
+   their way and spends the accent on links and the one live label. */
+:root{
+  --room:#090909; --wall:#111111; --edge:#333333; --control-edge:#777771;
+  --dust:#aaa9a4; --paint:#e8e8e2; --beam:#f7f7ef; --signal:#c9ff36;
+  --font-display:Handjet, monospace;
+  --font-mono:"IBM Plex Mono", ui-monospace, monospace;
+  --font-body:Rubik, system-ui, sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--room);color:var(--paint);
+  font:400 17px/1.6 var(--font-body);-webkit-font-smoothing:antialiased}
+.wrap{width:min(100% - 2.5rem, 1180px);margin-inline:auto}
+a{color:var(--signal);text-underline-offset:.25em}
+code{font-family:var(--font-mono);font-size:.88em;color:var(--paint)}
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+
+.top{padding-block:2.6rem 2rem;border-bottom:1px solid var(--edge)}
+.back{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--dust);text-decoration:none}
+.back:hover{color:var(--signal)}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(2.6rem,9vw,4.6rem);
+  line-height:.95;margin:.7rem 0 0;color:var(--beam);text-transform:uppercase}
+.lede{margin-top:1rem;max-width:58ch;color:var(--dust);font-size:1.03rem}
+
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
+  gap:1px;background:var(--edge);border:1px solid var(--edge);
+  margin-block:2.6rem 3rem}
+.card{background:var(--room);display:flex;flex-direction:column}
+.stage{position:relative;aspect-ratio:16/10;background:#000;overflow:hidden}
+.stage canvas{display:block;width:100%;height:100%}
+.stage[data-live="false"]::after{content:"paused";position:absolute;inset:auto 0 0 0;
+  padding:6px 10px;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--dust);background:#090909cc}
+.stage .fail{position:absolute;inset:0;display:grid;place-items:center;padding:1rem;
+  text-align:center;font-family:var(--font-mono);font-size:.72rem;color:var(--dust)}
+
+.body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.name{font-family:var(--font-display);font-weight:700;font-size:1.5rem;line-height:1;
+  color:var(--beam);text-transform:uppercase;margin:0}
+.desc{margin:0;color:var(--dust);font-size:.95rem;flex:1}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin:0}
+.tag{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--control-edge);border:1px solid var(--edge);padding:.14rem .42rem}
+.tag.live{color:var(--signal);border-color:var(--signal)}
+
+.gets{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.get{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--paint);text-decoration:none;border:1px solid var(--control-edge);
+  padding:.5rem .6rem;min-height:40px;display:inline-flex;align-items:center;
+  transition:color 140ms,border-color 140ms}
+.get:hover{color:var(--signal);border-color:var(--signal)}
+
+footer{padding-block:2rem 4rem;border-top:1px solid var(--edge);color:var(--dust);font-size:.92rem}
+footer p{max-width:70ch}
+.quiet{margin-top:.8rem;font-family:var(--font-mono);font-size:.72rem;
+  letter-spacing:.06em;color:var(--control-edge)}
+
+@media (max-width:640px){
+  #grid{grid-template-columns:1fr}
+  .get{min-height:44px}
+}
+@media (prefers-reduced-motion:reduce){
+  /* A wall of moving optical illusions is exactly what this setting is for.
+     The shaders hold their first frame until asked. */
+  .stage canvas{filter:none}
+}

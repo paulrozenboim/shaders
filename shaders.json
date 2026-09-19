@@ -1,0 +1,57 @@
+[
+  {
+    "slug": "abstract-lines-rain",
+    "name": "Abstract Lines Rain",
+    "shadertoy": "t3GGDy",
+    "description": "Just some abstract lines falling down",
+    "tags": [
+      "lines",
+      "abstract",
+      "rain",
+      "white",
+      "black"
+    ],
+    "usesMouse": false
+  },
+  {
+    "slug": "cartwheel-effect",
+    "name": "Cartwheel Effect",
+    "shadertoy": "Wfcyzs",
+    "description": "The famous Wagon Cartwheel Effect with lines",
+    "tags": [
+      "lines",
+      "opticalillusion",
+      "motion",
+      "cartwheel"
+    ],
+    "usesMouse": false
+  },
+  {
+    "slug": "data-rain",
+    "name": "Data Stream Rain",
+    "shadertoy": "wfGBzh",
+    "description": "Some data raining. Falling Pixels",
+    "tags": [
+      "rain",
+      "falling",
+      "pixels",
+      "data",
+      "stream"
+    ],
+    "usesMouse": false
+  },
+  {
+    "slug": "data-rain-interactive",
+    "name": "Interactive Data Rain",
+    "shadertoy": "Wc3czs",
+    "description": "Data blocks rain, controllable with mouse drags",
+    "tags": [
+      "rain",
+      "blocks",
+      "viz",
+      "data",
+      "depthillusion"
+    ],
+    "usesMouse": true
+  }
+]

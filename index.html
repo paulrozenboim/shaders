@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Shaders — unapaulogetic</title>
+<meta name="description" content="Fragment shaders for projection and live visuals by Paul Rozenboim. Free, and ready for TouchDesigner, Resolume or a web page.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Handjet:wght@400;700&family=IBM+Plex+Mono:wght@400;500&family=Rubik:wght@300;400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23c9ff36'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="back" href="https://unapaulogetic.art/lab/"><span aria-hidden="true">&#8592;</span> Lab</a>
+    <h1>Shaders</h1>
+    <p class="lede">
+      Fragment shaders written for projection and live visuals. Each one comes as
+      three files — one for TouchDesigner, one for Resolume and anything else that
+      reads ISF, and one for a web page. Free to use, credit welcome and not required.
+    </p>
+  </div>
+</header>
+
+<main class="wrap" id="grid"></main>
+
+<footer class="wrap">
+  <p>
+    Written in the Shadertoy dialect and converted by <code>tools/port.mjs</code> in
+    <a href="https://github.com/paulrozenboim/shaders">the repository</a>, so every
+    version of a shader comes from one source. Originals on
+    <a href="https://www.shadertoy.com/user/paulrozenboim">Shadertoy</a>.
+  </p>
+  <p class="quiet">Paul Rozenboim &middot; <a href="https://unapaulogetic.art">unapaulogetic.art</a></p>
+</footer>
+
+<script src="viewer.js" type="module"></script>
+</body>
+</html>
