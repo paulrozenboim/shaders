@@ -153,8 +153,8 @@ A WEB PAGE
 
   The webgl/ files are GLSL ES 1.00, which is what WebGL1 takes. They expect
   four uniforms: iResolution (vec3), iTime (float), iMouse (vec4) and
-  iFrame (int). viewer.js in the repository is a working example of feeding
-  them, and it is about a hundred lines.
+  iFrame (int). There is a working example of feeding them, about a hundred
+  lines, at unapaulogetic.art/lab/shaders/shaders.js
 
 
 THE SHADERS
@@ -196,7 +196,13 @@ const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven',
                'eight', 'nine', 'ten', 'eleven', 'twelve'];
 const count = WORDS[meta.length] ?? String(meta.length);
 
-const page = path.join(ROOT, 'index.html');
+/* The page lives in the website repo now, not here. Patch it there. */
+const page = path.resolve(ROOT, '..', '..', 'HOME PAGE', 'dist', 'lab', 'shaders', 'index.html');
+if (!existsSync(page)) {
+  console.log('  ! No page at dist/lab/shaders/index.html - button not updated');
+  console.log(`    Looked in ${page}`);
+  process.exit(0);
+}
 let html = readFileSync(page, 'utf8');
 
 /* Test that each marker is actually there. Comparing the before and after
@@ -214,6 +220,6 @@ if (missing.length) {
 } else {
   for (const [re, to] of edits) html = html.replace(re, to);
   writeFileSync(page, html);
-  console.log(`  index.html  -> "Download all ${count}", ${kb} KB`);
+  console.log(`  the site page  -> "Download all ${count}", ${kb} KB`);
 }
 console.log();

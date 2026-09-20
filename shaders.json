@@ -55,28 +55,28 @@
     "usesMouse": true
   },
   {
-    "slug": "moire-drift",
-    "name": "Moire Drift",
+    "slug": "hero-grid",
+    "name": "Hero Grid",
     "shadertoy": "",
-    "description": "Two line gratings turning against each other. Everything you see is the beat between them.",
+    "description": "The mesh from the events page hero. A surface that travels in a slow wave and swells wherever you point.",
     "tags": [
-      "moire",
-      "lines",
-      "interference",
-      "opticalillusion"
+      "grid",
+      "mesh",
+      "wave",
+      "interactive"
     ],
     "usesMouse": true
   },
   {
-    "slug": "lens-grid",
-    "name": "Lens Grid",
+    "slug": "wave-lines",
+    "name": "Wave Lines",
     "shadertoy": "",
-    "description": "Graph paper with something invisible moving underneath it. The grid never changes, only the coordinates.",
+    "description": "The drawing at the foot of the home page. Lines that drift on their own and lift where the pointer crosses them.",
     "tags": [
-      "grid",
-      "distortion",
-      "opart",
-      "lens"
+      "lines",
+      "wave",
+      "swell",
+      "interactive"
     ],
     "usesMouse": true
   }

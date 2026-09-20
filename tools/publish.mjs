@@ -31,7 +31,12 @@ if (!existsSync(distLab)) {
   process.exit(1);
 }
 
-const FILES = ['index.html', 'style.css', 'viewer.js', 'shaders.json'];
+/* The page itself is NOT here. It lives in the website repo at
+   dist/lab/shaders/, built into the site template with the real header and
+   footer, and styled by the site's own stylesheet. This repo owns the
+   shaders and the harness; the site owns the page. There is deliberately no
+   second copy of the viewer to drift out of step. */
+const FILES = ['shaders.json'];
 const DIRS = ['build', 'downloads', 'src'];
 
 let copied = 0;
@@ -47,10 +52,20 @@ function copyDir(from, to) {
 }
 
 /* Clear the built folders first. A shader deleted from src/ would otherwise
-   linger on the website forever, still downloadable and no longer real. */
+   linger on the website forever, still downloadable and no longer real.
+   Windows will refuse with ENOTEMPTY while something holds a handle on the
+   folder - a running dev server is the usual culprit - so say which, rather
+   than printing a stack trace at somebody. */
 for (const dir of DIRS) {
   const target = path.join(SITE, dir);
-  if (existsSync(target)) rmSync(target, { recursive: true, force: true });
+  if (!existsSync(target)) continue;
+  try {
+    rmSync(target, { recursive: true, force: true, maxRetries: 3, retryDelay: 120 });
+  } catch (err) {
+    console.error(`  ! Could not clear ${dir}/ in the website: ${err.code}`);
+    console.error(`    Something has the folder open. Stop any dev server on dist/ and run this again.`);
+    process.exit(1);
+  }
 }
 
 mkdirSync(SITE, { recursive: true });

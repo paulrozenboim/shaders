@@ -35,12 +35,17 @@ using `iTime`, `iResolution` and `iMouse`. Do not declare those uniforms
 yourself — each wrapper supplies them, and the harness refuses a file that
 declares its own rather than emitting something that will not compile.
 
-## The gallery
+## Where the page is
 
-`index.html` runs each shader in its own WebGL context, and only while it is
-on screen — four full-rate fragment shaders at once will heat a laptop. It
-respects `prefers-reduced-motion` properly rather than as a gesture: these are
-optical illusions built to make your eyes misfire, so those visitors get a
-still frame and a Play button.
+Not here. It is in the website repo at `dist/lab/shaders/`, built into the
+site template with the real header and footer, and styled by the site's own
+stylesheet. `tools/publish.mjs` copies `build/`, `downloads/` and `src/`
+across; the page and its viewer are the site's.
 
-No build step. It is a folder of static files.
+That split is on purpose. A second copy of the gallery living here would be
+a second thing to keep in step, and the whole point of `port.mjs` is that
+there is only ever one source for anything.
+
+To see a change, run all three and serve the website:
+
+    node tools/port.mjs && node tools/pack.mjs && node tools/publish.mjs
