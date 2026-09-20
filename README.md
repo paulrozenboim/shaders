@@ -1,7 +1,8 @@
 # Shaders
 
 Fragment shaders for projection and live visuals, by Paul Rozenboim.
-Live at **shaders.unapaulogetic.art**.
+Live at **unapaulogetic.art/lab/shaders/** - no subdomain; the page is
+copied into the main site by `tools/publish.mjs`.
 
 Each shader is written once, in the Shadertoy dialect, and converted into the
 three forms anything else wants:

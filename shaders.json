@@ -53,5 +53,31 @@
       "depthillusion"
     ],
     "usesMouse": true
+  },
+  {
+    "slug": "moire-drift",
+    "name": "Moire Drift",
+    "shadertoy": "",
+    "description": "Two line gratings turning against each other. Everything you see is the beat between them.",
+    "tags": [
+      "moire",
+      "lines",
+      "interference",
+      "opticalillusion"
+    ],
+    "usesMouse": true
+  },
+  {
+    "slug": "lens-grid",
+    "name": "Lens Grid",
+    "shadertoy": "",
+    "description": "Graph paper with something invisible moving underneath it. The grid never changes, only the coordinates.",
+    "tags": [
+      "grid",
+      "distortion",
+      "opart",
+      "lens"
+    ],
+    "usesMouse": true
   }
 ]

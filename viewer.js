@@ -68,7 +68,11 @@ async function card(meta) {
       <a class="get" href="build/touchdesigner/${meta.slug}.frag" download>TouchDesigner</a>
       <a class="get" href="build/isf/${meta.slug}.fs" download>ISF</a>
       <a class="get" href="build/webgl/${meta.slug}.frag" download>WebGL</a>
-      <a class="get" href="https://www.shadertoy.com/view/${meta.shadertoy}" target="_blank" rel="noopener">Shadertoy &#8599;</a>
+      ${/* Not every shader is on Shadertoy. An empty id would otherwise
+            render a link to the Shadertoy 404 page. */
+        meta.shadertoy
+          ? `<a class="get" href="https://www.shadertoy.com/view/${meta.shadertoy}" target="_blank" rel="noopener">Shadertoy &#8599;</a>`
+          : ''}
     </div>`;
 
   el.append(stage, body);
