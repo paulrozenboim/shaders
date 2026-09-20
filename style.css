@@ -67,3 +67,82 @@ footer p{max-width:70ch}
      The shaders hold their first frame until asked. */
   .stage canvas{filter:none}
 }
+
+/* ---- the pack, and the terms -------------------------------------------
+   Both live in the header because both are the answer to "can I just have
+   these": one click, and one sentence saying yes. */
+.grab{margin-top:1.8rem;display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.6rem}
+.pack{font-family:var(--font-mono);font-size:.82rem;letter-spacing:.07em;text-transform:uppercase;
+  background:var(--signal);color:var(--room);text-decoration:none;border:1px solid var(--signal);
+  padding:.85rem 1.15rem;min-height:48px;display:inline-flex;align-items:center;gap:.6rem;
+  transition:background 140ms,border-color 140ms}
+.pack:hover,.pack:focus-visible{background:var(--beam);border-color:var(--beam)}
+.pack-note{font-size:.68rem;letter-spacing:.06em;opacity:.65;text-transform:none}
+.terms{margin:0;max-width:44ch;font-size:.88rem;color:var(--dust)}
+.terms strong{color:var(--paint);font-weight:500}
+
+/* ---- see one properly ---------------------------------------------------
+   These are made to be thrown at a wall, and the cards are 330px wide. */
+.expand{position:absolute;inset:8px 8px auto auto;z-index:2;
+  font-family:var(--font-mono);font-size:.6rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--dust);background:#090909cc;border:1px solid var(--edge);
+  padding:.4rem .55rem;min-height:32px;cursor:pointer;opacity:0;
+  transition:opacity 140ms,color 140ms,border-color 140ms}
+.stage:hover .expand,.expand:focus-visible{opacity:1}
+.expand:hover,.expand:focus-visible{color:var(--signal);border-color:var(--signal)}
+/* Touch has no hover, so it simply stays visible. */
+@media (hover:none){.expand{opacity:1}}
+.stage:fullscreen{aspect-ratio:auto;width:100vw;height:100vh}
+.stage:fullscreen .expand{opacity:1}
+
+/* ---- how to actually use them ------------------------------------------ */
+.use,.made{padding-block:2.8rem;border-top:1px solid var(--edge)}
+.use h2,.made h2{font-family:var(--font-display);font-weight:700;
+  font-size:clamp(1.8rem,5vw,2.6rem);line-height:1;margin:0 0 1.8rem;
+  color:var(--beam);text-transform:uppercase}
+/* Three of them, so auto-fit is wrong: at two columns the third sits alone
+   beside an empty cell. One or three, never two. */
+.use-grid{display:grid;grid-template-columns:1fr;gap:1px;
+  background:var(--edge);border:1px solid var(--edge)}
+@media (min-width:900px){.use-grid{grid-template-columns:repeat(3,1fr)}}
+.how{background:var(--room);padding:22px 22px 24px;display:flex;flex-direction:column;gap:.7rem}
+.how h3{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--signal);margin:0 0 .3rem;font-weight:500}
+.how p{margin:0;font-size:.95rem;color:var(--dust)}
+.how b{color:var(--paint);font-weight:500}
+.how ol{margin:0;padding-left:1.15rem;font-size:.95rem;color:var(--dust)}
+.how ol li{margin-bottom:.4rem}
+.how ol li::marker{color:var(--control-edge);font-family:var(--font-mono);font-size:.82em}
+
+/* The one thing that will otherwise waste somebody's evening. */
+.gotcha{border-left:2px solid var(--signal);padding-left:.8rem;margin-top:.3rem!important}
+.also{font-size:.88rem!important;color:var(--control-edge)!important;margin-top:auto!important;
+  padding-top:.5rem}
+.also a{color:var(--dust)}
+.also a:hover{color:var(--signal)}
+
+.paths{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.3rem .9rem;align-items:baseline}
+.paths dt{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--paint)}
+.paths dd{margin:0;font-family:var(--font-mono);font-size:.72rem;color:var(--control-edge);
+  overflow-wrap:anywhere}
+
+.uniforms{margin:0;padding:0;list-style:none;display:grid;gap:.28rem}
+.uniforms li{display:flex;justify-content:space-between;gap:1rem;
+  border-bottom:1px dotted var(--edge);padding-bottom:.28rem}
+.uniforms span{font-family:var(--font-mono);font-size:.7rem;color:var(--control-edge)}
+
+.made p{max-width:68ch;color:var(--dust);font-size:.98rem}
+.made p + p{margin-top:.9rem}
+
+/* ---- who made it -------------------------------------------------------- */
+.sign{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem 2rem;align-items:baseline}
+.who{max-width:44ch}
+.who strong{color:var(--paint);font-weight:500}
+.links{display:flex;flex-wrap:wrap;gap:1.2rem;font-family:var(--font-mono);font-size:.74rem;
+  letter-spacing:.05em}
+
+@media (max-width:640px){
+  .grab{gap:1rem}
+  .pack{width:100%;justify-content:space-between}
+}

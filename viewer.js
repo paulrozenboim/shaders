@@ -31,6 +31,28 @@ async function card(meta) {
   const canvas = document.createElement('canvas');
   stage.appendChild(canvas);
 
+  /* These are made to be thrown at a wall, and a card is 330px wide. The
+     canvas resizes itself every frame from clientWidth, so going fullscreen
+     needs nothing beyond the request. */
+  if (document.fullscreenEnabled) {
+    const expand = document.createElement('button');
+    expand.className = 'expand';
+    expand.type = 'button';
+    expand.textContent = 'Full screen';
+    expand.setAttribute('aria-label', `Show ${meta.name} full screen`);
+    expand.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === stage) await document.exitFullscreen();
+        else await stage.requestFullscreen();
+      } catch { /* refused, e.g. not from a real gesture. Leave the card be. */ }
+    });
+    document.addEventListener('fullscreenchange', () => {
+      const on = document.fullscreenElement === stage;
+      expand.textContent = on ? 'Close' : 'Full screen';
+    });
+    stage.appendChild(expand);
+  }
+
   const tags = [
     ...(meta.usesMouse ? ['<span class="tag live">follows the pointer</span>'] : []),
     ...meta.tags.slice(0, 4).map(t => `<span class="tag">${t}</span>`),

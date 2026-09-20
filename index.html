@@ -4,7 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Shaders — unapaulogetic</title>
-<meta name="description" content="Fragment shaders for projection and live visuals by Paul Rozenboim. Free, and ready for TouchDesigner, Resolume or a web page.">
+<meta name="description" content="Free fragment shaders for projection and live visuals by Paul Rozenboim. Each one ready for TouchDesigner, Resolume and the web, with the setup written down.">
+
+<link rel="canonical" href="https://shaders.unapaulogetic.art/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="unapaulogetic">
+<meta property="og:title" content="Shaders">
+<meta property="og:description" content="Free fragment shaders for projection and live visuals. Ready for TouchDesigner, Resolume and the web.">
+<meta property="og:url" content="https://shaders.unapaulogetic.art/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shaders">
+<meta name="twitter:description" content="Free fragment shaders for projection and live visuals. Ready for TouchDesigner, Resolume and the web.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,22 +30,119 @@
     <h1>Shaders</h1>
     <p class="lede">
       Fragment shaders written for projection and live visuals. Each one comes as
-      three files — one for TouchDesigner, one for Resolume and anything else that
-      reads ISF, and one for a web page. Free to use, credit welcome and not required.
+      three files &mdash; one for TouchDesigner, one for Resolume and anything else
+      that reads ISF, and one for a web page.
     </p>
+    <div class="grab">
+      <a class="pack" href="downloads/unapaulogetic-shaders.zip" download>
+        <span data-pack="label">Download all four</span> <span class="pack-note" data-pack="size">zip, 19&#8239;KB</span>
+      </a>
+      <p class="terms">
+        Free to use, <strong>including at paid work</strong>. A credit is welcome
+        and not required. You do not need to ask first.
+      </p>
+    </div>
   </div>
 </header>
 
-<main class="wrap" id="grid"></main>
+<main class="wrap">
+
+  <div id="grid"></div>
+
+  <!-- The thing the page was missing. A shader that renders nothing because
+       nobody told you to add a uTime uniform is not a free shader. -->
+  <section class="use">
+    <h2>Putting them to work</h2>
+    <div class="use-grid">
+
+      <article class="how">
+        <h3>TouchDesigner</h3>
+        <ol>
+          <li>Add a <b>GLSL TOP</b>.</li>
+          <li>Open its Pixel Shader and paste the file in.</li>
+          <li>On the TOP&rsquo;s <b>Vectors</b> page add a uniform called
+            <code>uTime</code> and point it at <code>absTime.seconds</code>.</li>
+        </ol>
+        <p class="gotcha">
+          Step three is not optional. Without a clock the shader compiles fine
+          and renders one frozen frame, which looks like the shader is broken.
+        </p>
+        <p class="also">
+          For the ones that follow the pointer, add a <code>vec4</code> called
+          <code>uMouse</code> and feed x and y from a Mouse&nbsp;In CHOP,
+          normalised 0&ndash;1.
+        </p>
+      </article>
+
+      <article class="how">
+        <h3>Resolume &amp; other ISF hosts</h3>
+        <p>Drop the <code>.fs</code> file into the host&rsquo;s ISF folder and it
+          turns up as a source.</p>
+        <dl class="paths">
+          <dt>Resolume</dt><dd>Documents/Resolume&nbsp;Arena/Extra&nbsp;Effects/ISF</dd>
+          <dt>VDMX</dt><dd>Library/Graphics/ISF</dd>
+          <dt>Millumin</dt><dd>Documents/Millumin/ISF</dd>
+        </dl>
+        <p class="gotcha">
+          Restart the host if it does not appear. Most of them only read the
+          folder on launch.
+        </p>
+        <p class="also">
+          Pointer-driven shaders expose a <b>mouse</b> point control in the
+          host&rsquo;s own interface, so you can put it on a MIDI knob.
+        </p>
+      </article>
+
+      <article class="how">
+        <h3>A web page</h3>
+        <p>GLSL&nbsp;ES&nbsp;1.00, which is what WebGL1 takes and every browser
+          runs without argument. Four uniforms:</p>
+        <ul class="uniforms">
+          <li><code>iResolution</code> <span>vec3</span></li>
+          <li><code>iTime</code> <span>float</span></li>
+          <li><code>iMouse</code> <span>vec4</span></li>
+          <li><code>iFrame</code> <span>int</span></li>
+        </ul>
+        <p class="also">
+          <a href="https://github.com/paulrozenboim/shaders/blob/main/viewer.js">viewer.js</a>
+          in the repository is a working example of feeding them, and it is the
+          same file running the pictures above.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="made">
+    <h2>How these are made</h2>
+    <p>
+      Each shader is written once, in the Shadertoy dialect, and
+      <a href="https://github.com/paulrozenboim/shaders/blob/main/tools/port.mjs"><code>tools/port.mjs</code></a>
+      puts the three collars on it. Nothing is hand-converted, so the
+      TouchDesigner version cannot quietly drift away from the ISF one. If you
+      want to change a shader, change the file in <code>src/</code> and run the
+      script.
+    </p>
+    <p class="quiet">
+      Originals on <a href="https://www.shadertoy.com/user/paulrozenboim">Shadertoy</a>.
+      Everything here is in <a href="https://github.com/paulrozenboim/shaders">the repository</a>.
+    </p>
+  </section>
+
+</main>
 
 <footer class="wrap">
-  <p>
-    Written in the Shadertoy dialect and converted by <code>tools/port.mjs</code> in
-    <a href="https://github.com/paulrozenboim/shaders">the repository</a>, so every
-    version of a shader comes from one source. Originals on
-    <a href="https://www.shadertoy.com/user/paulrozenboim">Shadertoy</a>.
-  </p>
-  <p class="quiet">Paul Rozenboim &middot; <a href="https://unapaulogetic.art">unapaulogetic.art</a></p>
+  <div class="sign">
+    <p class="who">
+      <strong>Paul Rozenboim</strong> makes projection and live visuals for
+      events, and occasionally gives the tools away.
+    </p>
+    <p class="links">
+      <a href="https://unapaulogetic.art/lab/">More in the Lab</a>
+      <a href="https://unapaulogetic.art">unapaulogetic.art</a>
+      <a href="mailto:unapaulogetic@gmail.com">unapaulogetic@gmail.com</a>
+    </p>
+  </div>
 </footer>
 
 <script src="viewer.js" type="module"></script>
