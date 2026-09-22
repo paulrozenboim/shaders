@@ -1,4 +1,5 @@
 /*{
+  "ISFVSN": "2.0",
   "DESCRIPTION": "The drawing at the foot of the home page. Lines that drift on their own and lift where the pointer crosses them.",
   "CREDIT": "Paul Rozenboim — unapaulogetic.art",
   "CATEGORIES": [
@@ -13,8 +14,8 @@
       "NAME": "mouse",
       "TYPE": "point2D",
       "DEFAULT": [
-        0.5,
-        0.5
+        0,
+        0
       ],
       "MIN": [
         0,

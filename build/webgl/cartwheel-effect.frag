@@ -50,7 +50,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     // 6. Visual Cleanup: Row Separators
     // This adds a small black line between rows so you can see them clearly
     float rowLocalY = fract(abs(uv.y) * ROWS * 2.0);
-    float separator = smoothstep(0.0, 0.1, rowLocalY) * smoothstep(1.0, 0.9, rowLocalY);
+    float separator = smoothstep(0.0, 0.1, rowLocalY) * (1.0 - smoothstep(0.9, 1.0, rowLocalY));
     
     // 7. Output
     // Combine bars and separators

@@ -3,7 +3,7 @@
     "slug": "abstract-lines-rain",
     "name": "Abstract Lines Rain",
     "shadertoy": "t3GGDy",
-    "description": "Just some abstract lines falling down",
+    "description": "Flowing abstract lines animated by procedural noise.",
     "tags": [
       "lines",
       "abstract",
@@ -17,7 +17,7 @@
     "slug": "cartwheel-effect",
     "name": "Cartwheel Effect",
     "shadertoy": "Wfcyzs",
-    "description": "The famous Wagon Cartwheel Effect with lines",
+    "description": "A generative study of the wagon-wheel motion illusion using rows of moving lines.",
     "tags": [
       "lines",
       "opticalillusion",
@@ -44,7 +44,7 @@
     "slug": "data-rain-interactive",
     "name": "Interactive Data Rain",
     "shadertoy": "Wc3czs",
-    "description": "Data blocks rain, controllable with mouse drags",
+    "description": "Interactive data rain with controls for speed and column density.",
     "tags": [
       "rain",
       "blocks",
@@ -52,7 +52,11 @@
       "data",
       "depthillusion"
     ],
-    "usesMouse": true
+    "usesMouse": true,
+    "mouseDefault": [
+      0.5,
+      0.5
+    ]
   },
   {
     "slug": "hero-grid",
@@ -65,7 +69,11 @@
       "wave",
       "interactive"
     ],
-    "usesMouse": true
+    "usesMouse": true,
+    "mouseDefault": [
+      0,
+      0
+    ]
   },
   {
     "slug": "wave-lines",
@@ -78,6 +86,10 @@
       "swell",
       "interactive"
     ],
-    "usesMouse": true
+    "usesMouse": true,
+    "mouseDefault": [
+      0,
+      0
+    ]
   }
 ]

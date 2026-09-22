@@ -3,12 +3,13 @@
 // Original: shadertoy.com/view/Wfcyzs
 // Free to use. A credit is welcome and not required.
 // --- TouchDesigner setup ----------------------------------------------
-// Drop this in a GLSL TOP, then on the TOP's Vectors page add:
-//     uTime   float   ->  absTime.seconds        (or a Speed CHOP)
-//     uMouse  vec4    ->  unused by this shader, leave at 0
-// Nothing else needs changing.
+// Paste into the Pixel Shader DAT of a GLSL TOP (GLSL 3.30 or newer).
+// On the TOP's Vectors page, set Uniform Name to uTime and its first
+// value to absTime.seconds in Python expression mode. This drives animation.
+// uMouse is unused; no mouse binding is needed.
+// Set the TOP's output resolution as required. TD supplies the version line.
 // ----------------------------------------------------------------------
-out vec4 fragColor;
+layout(location = 0) out vec4 fragColor;
 
 uniform float uTime;
 uniform vec4  uMouse;
@@ -59,7 +60,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     // 6. Visual Cleanup: Row Separators
     // This adds a small black line between rows so you can see them clearly
     float rowLocalY = fract(abs(uv.y) * ROWS * 2.0);
-    float separator = smoothstep(0.0, 0.1, rowLocalY) * smoothstep(1.0, 0.9, rowLocalY);
+    float separator = smoothstep(0.0, 0.1, rowLocalY) * (1.0 - smoothstep(0.9, 1.0, rowLocalY));
     
     // 7. Output
     // Combine bars and separators

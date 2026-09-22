@@ -120,33 +120,47 @@ ask first.
 WHAT IS IN HERE
 
   touchdesigner/   .frag - for a GLSL TOP
-  isf/             .fs   - for Resolume, VDMX, Millumin, CoGe
+  isf/             .fs   - for Resolume Wire, VDMX, Millumin, CoGe
   webgl/           .frag - for a web page
 
 
 TOUCHDESIGNER
 
-  1. Add a GLSL TOP.
-  2. Open its Pixel Shader and paste the file in.
-  3. On the TOP's Vectors page, add a uniform named uTime, and point it at
-     absTime.seconds. Nothing renders until you do this - a shader with no
-     clock is a still frame.
-  4. For the shaders that follow the pointer, add a vec4 named uMouse and
-     feed x and y from a Mouse In CHOP, normalised 0 to 1.
+  1. Add a GLSL TOP using GLSL 3.30 or newer; set its output resolution.
+  2. Paste the file into its Pixel Shader DAT. TD supplies the version line.
+  3. On the Vectors page, set Uniform Name to uTime. Set the first value
+     to absTime.seconds in Python expression mode. Without an advancing
+     clock, the shader renders a still frame.
+  4. For interactive shaders, add Uniform Name uMouse with four values.
+     Feed x,y normalised 0 to 1, with a bottom-left origin; leave z,w at 0.
+     Remap Mouse In CHOP channels as needed. Hero Grid and Wave Lines use
+     x,y = 0 for automatic motion. Interactive Data Rain can start at 0.5,0.5.
 
   The top of each file repeats these steps.
 
 
-RESOLUME AND OTHER ISF HOSTS
+RESOLUME WIRE AND OTHER ISF HOSTS
 
-  Drop the .fs file into the ISF folder and it appears as a source.
+  These are ISF 2.0 generators (sources, with no input image).
+  Resolume Wire: create an ISF node and load the .fs Fragment Shader resource.
+  Connect it to the patch output; compile a Source patch for Arena/Avenue.
+  Raw .fs files do not belong in Arena's Extra Effects folder.
+  VDMX: install in ~/Library/Graphics/ISF (per user) or /Library/Graphics/ISF.
+  Millumin: install these generators in ~/Library/Millumin/ISF-source,
+  then launch Millumin and find them in the library's shaders group.
+  Other ISF hosts: use their documented shader import workflow.
 
-    Resolume   Documents/Resolume Arena/Extra Effects/ISF
-    VDMX       Library/Graphics/ISF
-    Millumin   Documents/Millumin/ISF
+  The "mouse" point is a normalised host parameter, not necessarily a cursor.
+  Hero Grid and Wave Lines default to [0,0] for automatic motion. Reset the
+  point to [0,0] to restore it. Hero Grid follows when either pixel coordinate
+  exceeds 1; Wave Lines follows when x exceeds 1 pixel (y is ignored).
+  Interactive Data Rain defaults to [0.5,0.5]; x controls speed 10 to 30,
+  y controls column density 120 to 20. Coordinates use a bottom-left origin.
 
-  Restart the host if it does not show up. Shaders that follow the pointer
-  expose a "mouse" point control in the host's own interface.
+  Host references:
+  https://resolume.com/support/en/isf
+  https://docs.vidvox.net/vdmx/vdmx_assets
+  https://help.millumin.com/v4/tutorials/create-images-and-effects-with-shaders/
 
 
 A WEB PAGE
@@ -155,6 +169,10 @@ A WEB PAGE
   four uniforms: iResolution (vec3), iTime (float), iMouse (vec4) and
   iFrame (int). There is a working example of feeding them, about a hundred
   lines, at unapaulogetic.art/lab/shaders/shaders.js
+  iResolution.xy is the drawing-buffer size in pixels; iTime is seconds.
+  iMouse.xy is in drawing-buffer pixels, bottom-left origin. Use [0,0]
+  for Hero Grid / Wave Lines automatic motion; the current gallery starts
+  at the centre instead. Uniforms unused by a shader may be optimised away.
 
 
 THE SHADERS

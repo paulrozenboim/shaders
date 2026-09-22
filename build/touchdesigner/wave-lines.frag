@@ -2,13 +2,15 @@
 // Paul Rozenboim — unapaulogetic.art
 // Free to use. A credit is welcome and not required.
 // --- TouchDesigner setup ----------------------------------------------
-// Drop this in a GLSL TOP, then on the TOP's Vectors page add:
-//     uTime   float   ->  absTime.seconds        (or a Speed CHOP)
-//     uMouse  vec4    ->  x,y from a Mouse In CHOP, normalised 0..1
-//                         z,w can stay 0
-// Nothing else needs changing.
+// Paste into the Pixel Shader DAT of a GLSL TOP (GLSL 3.30 or newer).
+// On the TOP's Vectors page, set Uniform Name to uTime and its first
+// value to absTime.seconds in Python expression mode. This drives animation.
+// Add Uniform Name uMouse with four values: x,y normalised to 0..1,
+// bottom-left origin; z,w = 0. Remap Mouse In CHOP channels if needed.
+// Leave x,y at 0 for automatic motion; set a point to interact.
+// Set the TOP's output resolution as required. TD supplies the version line.
 // ----------------------------------------------------------------------
-out vec4 fragColor;
+layout(location = 0) out vec4 fragColor;
 
 uniform float uTime;
 uniform vec4  uMouse;

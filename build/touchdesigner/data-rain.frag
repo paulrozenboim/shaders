@@ -3,12 +3,13 @@
 // Original: shadertoy.com/view/wfGBzh
 // Free to use. A credit is welcome and not required.
 // --- TouchDesigner setup ----------------------------------------------
-// Drop this in a GLSL TOP, then on the TOP's Vectors page add:
-//     uTime   float   ->  absTime.seconds        (or a Speed CHOP)
-//     uMouse  vec4    ->  unused by this shader, leave at 0
-// Nothing else needs changing.
+// Paste into the Pixel Shader DAT of a GLSL TOP (GLSL 3.30 or newer).
+// On the TOP's Vectors page, set Uniform Name to uTime and its first
+// value to absTime.seconds in Python expression mode. This drives animation.
+// uMouse is unused; no mouse binding is needed.
+// Set the TOP's output resolution as required. TD supplies the version line.
 // ----------------------------------------------------------------------
-out vec4 fragColor;
+layout(location = 0) out vec4 fragColor;
 
 uniform float uTime;
 uniform vec4  uMouse;
@@ -65,20 +66,9 @@ float get_data_mask(vec2 uv, float base_speed, float u_time, float grid_scale_x)
     vec2 grid_uv_scrolled = grid_uv;
     grid_uv_scrolled.y += u_time * column_speed; 
     
-    // --- Seamless Blending Logic ---
-    vec2 p0_id = floor(grid_uv_scrolled); 
-    float f = fract(grid_uv_scrolled.y);  
-
-    // Mask 0: Current row
-    vec2 uv_in_block0 = vec2(fract(grid_uv_scrolled.x), f);
-    float mask0 = get_row_mask_value(p0_id, uv_in_block0);
-
-    // Mask 1: Next row sliding in
-    vec2 p1_id = p0_id + vec2(0.0, 1.0);
-    vec2 uv_in_block1 = vec2(fract(grid_uv_scrolled.x), f - 1.0);
-    float mask1 = get_row_mask_value(p1_id, uv_in_block1);
-    
-    return max(mask0, mask1); 
+    // floor selects the scrolling cell; fract gives its local coordinates.
+    // Segments stay within their cell, so no neighbouring-row blend is needed.
+    return get_row_mask_value(floor(grid_uv_scrolled), fract(grid_uv_scrolled));
 }
 
 

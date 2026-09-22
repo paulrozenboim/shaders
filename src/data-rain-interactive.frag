@@ -45,20 +45,9 @@ float get_data_mask(vec2 uv, float base_speed, float u_time, float grid_scale_x)
     vec2 grid_uv_scrolled = grid_uv;
     grid_uv_scrolled.y += u_time * column_speed; 
     
-    // --- Seamless Blending Logic ---
-    vec2 p0_id = floor(grid_uv_scrolled); 
-    float f = fract(grid_uv_scrolled.y);  
-
-    // Mask 0: Current row
-    vec2 uv_in_block0 = vec2(fract(grid_uv_scrolled.x), f);
-    float mask0 = get_row_mask_value(p0_id, uv_in_block0);
-
-    // Mask 1: Next row sliding in
-    vec2 p1_id = p0_id + vec2(0.0, 1.0);
-    vec2 uv_in_block1 = vec2(fract(grid_uv_scrolled.x), f - 1.0);
-    float mask1 = get_row_mask_value(p1_id, uv_in_block1);
-    
-    return max(mask0, mask1); 
+    // floor selects the scrolling cell; fract gives its local coordinates.
+    // Segments stay within their cell, so no neighbouring-row blend is needed.
+    return get_row_mask_value(floor(grid_uv_scrolled), fract(grid_uv_scrolled));
 }
 
 
@@ -82,7 +71,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     // CHANGE THESE TWO VALUES TO EASILY CONTROL THE SCROLL SPEED RANGE:
     const float MIN_SPEED = 10.0; // The speed when mouse is fully on the left (0.0)
-    const float SPEED_RANGE = 20.0; // The difference between max and min speed (Max Speed = 0.5 + 2.0 = 2.5)
+    const float SPEED_RANGE = 20.0; // The difference between max and min speed (Max Speed = 10.0 + 20.0 = 30.0)
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
@@ -90,7 +79,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
     float base_speed = MIN_SPEED + u_mouse_x * SPEED_RANGE; 
     
     // Control 2: Column Width controlled by mouse Y (thin to wide)
-    // Range: 30.0 (wide) to 130.0 (thin)
+    // Range: 20.0 (wide) to 120.0 (thin)
     float grid_scale_x = 20.0 + (1.0 - u_mouse_y) * 100.0; 
 
     // =================================================================

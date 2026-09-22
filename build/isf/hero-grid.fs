@@ -1,4 +1,5 @@
 /*{
+  "ISFVSN": "2.0",
   "DESCRIPTION": "The mesh from the events page hero. A surface that travels in a slow wave and swells wherever you point.",
   "CREDIT": "Paul Rozenboim — unapaulogetic.art",
   "CATEGORIES": [
@@ -13,8 +14,8 @@
       "NAME": "mouse",
       "TYPE": "point2D",
       "DEFAULT": [
-        0.5,
-        0.5
+        0,
+        0
       ],
       "MIN": [
         0,

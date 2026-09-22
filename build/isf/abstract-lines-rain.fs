@@ -1,5 +1,6 @@
 /*{
-  "DESCRIPTION": "Just some abstract lines falling down",
+  "ISFVSN": "2.0",
+  "DESCRIPTION": "Flowing abstract lines animated by procedural noise.",
   "CREDIT": "Paul Rozenboim — unapaulogetic.art",
   "CATEGORIES": [
     "Generator",
@@ -60,7 +61,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     float deformedY = baseY + offset;
 
     float dist = abs(uv.y - deformedY);
-    float line = smoothstep(thickness, 0.0, dist);
+    float line = 1.0 - smoothstep(0.0, thickness, dist);
 
     fragColor = vec4(vec3(line), 1.0);
 }

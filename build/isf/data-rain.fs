@@ -1,4 +1,5 @@
 /*{
+  "ISFVSN": "2.0",
   "DESCRIPTION": "Some data raining. Falling Pixels",
   "CREDIT": "Paul Rozenboim — unapaulogetic.art",
   "CATEGORIES": [
@@ -68,20 +69,9 @@ float get_data_mask(vec2 uv, float base_speed, float u_time, float grid_scale_x)
     vec2 grid_uv_scrolled = grid_uv;
     grid_uv_scrolled.y += u_time * column_speed; 
     
-    // --- Seamless Blending Logic ---
-    vec2 p0_id = floor(grid_uv_scrolled); 
-    float f = fract(grid_uv_scrolled.y);  
-
-    // Mask 0: Current row
-    vec2 uv_in_block0 = vec2(fract(grid_uv_scrolled.x), f);
-    float mask0 = get_row_mask_value(p0_id, uv_in_block0);
-
-    // Mask 1: Next row sliding in
-    vec2 p1_id = p0_id + vec2(0.0, 1.0);
-    vec2 uv_in_block1 = vec2(fract(grid_uv_scrolled.x), f - 1.0);
-    float mask1 = get_row_mask_value(p1_id, uv_in_block1);
-    
-    return max(mask0, mask1); 
+    // floor selects the scrolling cell; fract gives its local coordinates.
+    // Segments stay within their cell, so no neighbouring-row blend is needed.
+    return get_row_mask_value(floor(grid_uv_scrolled), fract(grid_uv_scrolled));
 }
 
 

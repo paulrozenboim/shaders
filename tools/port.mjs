@@ -1,5 +1,5 @@
 /**
- * One shader in, four shaders out.
+ * One shader in, three shaders out.
  *
  *     node tools/port.mjs
  *
@@ -12,10 +12,10 @@
  * than hand-converting each one — and getting a different answer each time —
  * this puts the collar on mechanically:
  *
- *   webgl/          a plain fragment shader the viewer in this repo runs
- *   touchdesigner/  for a GLSL TOP: TD declares its own output and insists
+ *   webgl/          a plain fragment shader the website viewer runs
+ *   touchdesigner/  for a GLSL TOP: declare an output and ensure
  *                   the result goes through TDOutputSwizzle
- *   isf/            ISF, for Resolume, VDMX and Millumin: a JSON header and
+ *   isf/            ISF, for Resolume Wire, VDMX and Millumin: a JSON header and
  *                   RENDERSIZE / TIME in place of the Shadertoy names
  *
  * Nothing here parses GLSL. It prepends declarations and appends an entry
@@ -23,8 +23,9 @@
  */
 import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';
 import { join, basename } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const SRC = join(ROOT, 'src');
 const OUT = join(ROOT, 'build');
 
@@ -55,20 +56,22 @@ void main() {
 `;
 
 /* ---- TouchDesigner --------------------------------------------------------
-   A GLSL TOP declares its own output and will not accept gl_FragColor.
+   A GLSL TOP needs an explicit output instead of gl_FragColor.
    iResolution comes free from uTDOutputInfo; iTime and iMouse do not exist,
    so the TOP needs two custom uniforms — named in the header below, because
    this is the step people get wrong. */
 const touchdesigner = (body, m) => `${CREDIT(m)}// --- TouchDesigner setup ----------------------------------------------
-// Drop this in a GLSL TOP, then on the TOP's Vectors page add:
-//     uTime   float   ->  absTime.seconds        (or a Speed CHOP)
+// Paste into the Pixel Shader DAT of a GLSL TOP (GLSL 3.30 or newer).
+// On the TOP's Vectors page, set Uniform Name to uTime and its first
+// value to absTime.seconds in Python expression mode. This drives animation.
 ${m.usesMouse
-  ? `//     uMouse  vec4    ->  x,y from a Mouse In CHOP, normalised 0..1
-//                         z,w can stay 0`
-  : `//     uMouse  vec4    ->  unused by this shader, leave at 0`}
-// Nothing else needs changing.
+  ? `// Add Uniform Name uMouse with four values: x,y normalised to 0..1,
+// bottom-left origin; z,w = 0. Remap Mouse In CHOP channels if needed.
+// ${m.mouseDefault?.[0] === 0 ? 'Leave x,y at 0 for automatic motion; set a point to interact.' : 'Start x,y at 0.5 for midrange speed and density.'}`
+  : `// uMouse is unused; no mouse binding is needed.`}
+// Set the TOP's output resolution as required. TD supplies the version line.
 // ----------------------------------------------------------------------
-out vec4 fragColor;
+layout(location = 0) out vec4 fragColor;
 
 uniform float uTime;
 uniform vec4  uMouse;
@@ -88,15 +91,16 @@ void main() {
 `;
 
 /* ---- ISF ------------------------------------------------------------------
-   Resolume, VDMX, Millumin and CoGe. The JSON header is the whole format;
+   Resolume Wire, VDMX, Millumin and CoGe. The JSON header describes the inputs;
    the GLSL underneath is ordinary. */
 const isf = (body, m) => {
   const header = {
+    ISFVSN: '2.0',
     DESCRIPTION: m.description || m.name,
     CREDIT: 'Paul Rozenboim — unapaulogetic.art',
     CATEGORIES: ['Generator', ...(m.tags ?? [])],
     INPUTS: m.usesMouse
-      ? [{ NAME: 'mouse', TYPE: 'point2D', DEFAULT: [0.5, 0.5], MIN: [0, 0], MAX: [1, 1] }]
+      ? [{ NAME: 'mouse', TYPE: 'point2D', DEFAULT: m.mouseDefault ?? [0.5, 0.5], MIN: [0, 0], MAX: [1, 1] }]
       : [],
   };
   return `/*${JSON.stringify(header, null, 2)}*/

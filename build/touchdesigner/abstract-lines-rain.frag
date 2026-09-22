@@ -3,12 +3,13 @@
 // Original: shadertoy.com/view/t3GGDy
 // Free to use. A credit is welcome and not required.
 // --- TouchDesigner setup ----------------------------------------------
-// Drop this in a GLSL TOP, then on the TOP's Vectors page add:
-//     uTime   float   ->  absTime.seconds        (or a Speed CHOP)
-//     uMouse  vec4    ->  unused by this shader, leave at 0
-// Nothing else needs changing.
+// Paste into the Pixel Shader DAT of a GLSL TOP (GLSL 3.30 or newer).
+// On the TOP's Vectors page, set Uniform Name to uTime and its first
+// value to absTime.seconds in Python expression mode. This drives animation.
+// uMouse is unused; no mouse binding is needed.
+// Set the TOP's output resolution as required. TD supplies the version line.
 // ----------------------------------------------------------------------
-out vec4 fragColor;
+layout(location = 0) out vec4 fragColor;
 
 uniform float uTime;
 uniform vec4  uMouse;
@@ -57,7 +58,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     float deformedY = baseY + offset;
 
     float dist = abs(uv.y - deformedY);
-    float line = smoothstep(thickness, 0.0, dist);
+    float line = 1.0 - smoothstep(0.0, thickness, dist);
 
     fragColor = vec4(vec3(line), 1.0);
 }
